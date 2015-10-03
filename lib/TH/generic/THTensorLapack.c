@@ -207,7 +207,7 @@ void THTensor_(gels)(THTensor *rb_, THTensor *ra_, THTensor *b, THTensor *a)
 		  THTensor_(data)(rb__), ldb, 
 		  THTensor_(data)(work), lwork, &info);
 
-  THLapackCheck("Lapack Error in %s : The %d-th diagonal element of the triangular factor of A is zero", "gels", info);
+  THLapackCheck("Lapack Error in %s : The %d-th diagonal element of the triangular factor of A is zero", "gels", info, info);
 
   /* rb__ is currently ldb by nrhs; resize it to n by nrhs */
   rb__->size[0] = n;
@@ -265,7 +265,7 @@ void THTensor_(geev)(THTensor *re_, THTensor *rv_, THTensor *a_, const char *job
   THLapack_(geev)('N', jobvr[0], n, THTensor_(data)(a), lda, THTensor_(data)(wr), THTensor_(data)(wi), 
       NULL, 1, rv_data, ldvr, THTensor_(data)(work), lwork, &info);
 
-  THLapackCheck(" Lapack Error in %s : %d off-diagonal elements of an didn't converge to zero", "geev", info);
+  THLapackCheck(" Lapack Error in %s : %d off-diagonal elements of an didn't converge to zero", "geev", info, info);
 
   {
     real *re_data = THTensor_(data)(re__);
@@ -318,7 +318,7 @@ void THTensor_(syev)(THTensor *re_, THTensor *rv_, THTensor *a, const char *jobz
   THLapack_(syev)(jobz[0], uplo[0], n, THTensor_(data)(rv__), lda,
 		  THTensor_(data)(re_), THTensor_(data)(work), lwork, &info);
 
-  THLapackCheck("Lapack Error %s : %d off-diagonal elements didn't converge to zero", "syev", info);
+  THLapackCheck("Lapack Error %s : %d off-diagonal elements didn't converge to zero", "syev", info, info);
 
   THTensor_(freeCopyTo)(rv__, rv_);
   THTensor_(freeCopyTo)(re__, re_);
@@ -387,7 +387,7 @@ void THTensor_(gesvd2)(THTensor *ru_, THTensor *rs_, THTensor *rv_, THTensor *ra
 		   THTensor_(data)(rv__), ldvt,
 		   THTensor_(data)(work),lwork, &info);
 
-  THLapackCheck(" Lapack Error %s : %d superdiagonals failed to converge.", "gesvd", info);
+  THLapackCheck(" Lapack Error %s : %d superdiagonals failed to converge.", "gesvd", info, info);
 
   THTensor_(freeCopyTo)(ru__, ru_);
   THTensor_(freeCopyTo)(rs__, rs_);
@@ -630,7 +630,7 @@ void THTensor_(geqrf)(THTensor *ra_, THTensor *rtau_, THTensor *a)
                    THTensor_(data)(rtau_),
                    THTensor_(data)(work), lwork, &info);
 
-  THLapackCheck("Lapack Error %s : unknown Lapack error. info = %i", "geqrf", info);
+  THLapackCheck("Lapack Error %s : unknown Lapack error. info = %i", "geqrf", info, info);
 
   THTensor_(freeCopyTo)(ra__, ra_);
   THTensor_(free)(work);
@@ -679,7 +679,7 @@ void THTensor_(orgqr)(THTensor *ra_, THTensor *a, THTensor *tau)
                    THTensor_(data)(tau),
                    THTensor_(data)(work), lwork, &info);
 
-  THLapackCheck(" Lapack Error %s : unknown Lapack error. info = %i", "orgqr", info);
+  THLapackCheck(" Lapack Error %s : unknown Lapack error. info = %i", "orgqr", info, info);
   THTensor_(freeCopyTo)(ra__, ra_);
   THTensor_(free)(work);
 }
@@ -738,7 +738,7 @@ void THTensor_(ormqr)(THTensor *ra_, THTensor *a, THTensor *tau, THTensor *c, co
                    THTensor_(data)(tau), THTensor_(data)(ra__), ldc,
                    THTensor_(data)(work), lwork, &info);
 
-  THLapackCheck(" Lapack Error %s : unknown Lapack error. info = %i", "ormqr", info);
+  THLapackCheck(" Lapack Error %s : unknown Lapack error. info = %i", "ormqr", info, info);
   THTensor_(freeCopyTo)(ra__, ra_);
   THTensor_(free)(work);
 }
